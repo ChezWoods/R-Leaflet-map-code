@@ -1,0 +1,38 @@
+#Install and use these libarys, make sure R + Rstudio are up to date
+library(tidyverse)
+library(leaflet)
+library(rgdal)
+library(sf)
+
+#Setwd to file with all necessary files in.
+setwd('~/Documents/Aus/Species mapping')
+
+
+#assigning an object for points, replace: dsn="XYZ", layer ="layerName" 
+H_elegans <- readOGR(
+  dsn= "~/Documents/Aus/Species mapping/mygeodata", 
+  GDAL1_integer64_policy =  TRUE,
+  layer = "merged_Helegans_marine_parks-point",
+  use_iconv = FALSE)
+
+#assigning an object for polygons, replace: dsn="XYZ", layer ="layerName"
+parks <- readOGR(
+  dsn= "~/Documents/Aus/Species mapping/mygeodata", 
+  GDAL1_integer64_policy =  TRUE,
+  layer = "merged_Helegans_marine_parks-polygon",
+  use_iconv = FALSE)
+
+#assigning an objective for DNA points, replace: dsn="XYZ", layer ="layerName" 
+DNA_points <- readOGR(
+  dsn = "~/Documents/Aus/Species mapping/mygeodataDNA",
+  GDAL1_integer64_policy =  TRUE,
+  use_iconv = FALSE)
+
+
+
+#Code for plotting both polygons and markers, replace data="xyz" with assinged names for objects
+leaflet() %>% 
+  addTiles() %>%
+  addCircleMarkers(data = H_elegans, color = "green", radius = 0.1) %>%
+  addPolygons (data = parks, color= "red", weight = 1, smoothFactor = 0.5, opacity = 0.5,fillOpacity = 0.2) %>%
+  addCircleMarkers(data = DNA_points, color = "blue", radius = 0.1) 
