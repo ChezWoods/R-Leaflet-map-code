@@ -30,7 +30,7 @@ DNA_points <- readOGR(
 
 
 
-#Code for plotting both polygons and markers, replace data="xyz" with assinged names for objects
+#Code for plotting both polygons and markers, replace data="xyz" with assigned names for objects
 leaflet() %>% 
   addTiles() %>%
   addCircleMarkers(data = H_elegans, color = "green", radius = 0.1) %>%
